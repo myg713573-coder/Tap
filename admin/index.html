@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#11110f">
+  <title>TAP Control</title>
+  <style>
+    :root{color-scheme:dark;--bg:#11110f;--panel:#1b1a17;--panel-2:#22211d;--line:#35332d;--gold:#edb84c;--gold-bright:#ffe4a0;--ink:#f4f0e7;--muted:#a8a49a;--green:#84c99b;--red:#e99073;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 86% 0%,#282318 0,transparent 30rem),var(--bg);color:var(--ink);min-height:100vh}button,input,textarea,select{font:inherit}button{cursor:pointer}.shell{min-height:100vh}.topbar{height:68px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:#11110fe8;position:sticky;top:0;z-index:5;backdrop-filter:blur(14px)}.brand{font-weight:900;letter-spacing:3px;color:var(--gold-bright);font-size:20px}.brand small{font-size:10px;color:var(--muted);letter-spacing:1.6px;margin-left:12px;font-weight:650}.top-actions{display:flex;align-items:center;gap:14px;color:var(--muted);font-size:12px}.layout{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1440px;margin:auto}.sidebar{padding:24px 14px;border-right:1px solid var(--line);min-height:calc(100vh - 68px)}.nav{display:grid;gap:5px}.nav button{background:transparent;border:0;color:var(--muted);padding:11px 13px;text-align:left;border-radius:8px;font-size:13px}.nav button:hover,.nav button.active{background:#30291d;color:var(--gold-bright)}.workspace{padding:30px clamp(18px,4vw,54px);max-width:1180px;width:100%}.view{display:none;animation:enter .2s ease-out}.view.active{display:block}@keyframes enter{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}h1{font-size:27px;margin:0 0 7px;letter-spacing:0;font-weight:720}h2{font-size:16px;margin:0 0 18px;font-weight:650}h3{font-size:13px;margin:0 0 14px;color:var(--gold-bright)}.sub{color:var(--muted);font-size:13px;margin:0 0 24px}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:22px 0 28px}.metric,.panel{background:linear-gradient(145deg,#211f1a,#191815);border:1px solid var(--line);border-radius:8px}.metric{padding:17px}.metric span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:700}.metric strong{display:block;font-size:25px;margin-top:8px;font-weight:700}.panel{padding:20px;margin:0 0 16px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:16px}.section-head h2{margin:0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.field{display:grid;gap:7px;margin-bottom:14px}.field label{font-size:11px;color:var(--muted);font-weight:650}.field input,.field textarea,.field select{background:#121210;border:1px solid var(--line);color:var(--ink);border-radius:6px;padding:10px 11px;outline:none;width:100%}.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--gold)}.field textarea{min-height:86px;resize:vertical}.field input[type=checkbox]{width:17px;height:17px;accent-color:var(--gold)}.toggle{display:flex;align-items:center;gap:10px;color:var(--ink);font-size:13px;margin:6px 0 16px}.btn{border:1px solid transparent;border-radius:6px;padding:10px 14px;font-size:12px;font-weight:720;letter-spacing:.25px}.btn.primary{background:var(--gold);color:#17130a}.btn.ghost{background:transparent;border-color:var(--line);color:var(--ink)}.btn.danger{background:#3a211b;border-color:#694133;color:#ffc2ac}.btn:disabled{opacity:.55;cursor:not-allowed}.toolbar{display:flex;gap:9px;flex-wrap:wrap}.notice{padding:11px 13px;border-radius:6px;background:#2d281c;border:1px solid #55472b;color:var(--gold-bright);font-size:12px;margin:0 0 16px}.notice.error{background:#321f1a;border-color:#694133;color:#ffc2ac}.notice:empty{display:none}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:12px}th{text-align:left;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.8px;font-weight:650}td,th{padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:top}td:last-child{white-space:nowrap}.status{color:var(--gold-bright);font-size:10px;font-weight:700;text-transform:uppercase}.muted{color:var(--muted)}.preview{border:1px dashed #77613a;padding:20px;border-radius:8px;background:linear-gradient(130deg,#241e12,#171613);display:flex;align-items:center;gap:16px}.coin{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 30% 25%,#fff0b7,#ffd15b 42%,#9c5e1b 80%);color:#68400e;font-size:22px;font-weight:900;box-shadow:0 0 25px #d28b2140}.preview strong{font-size:16px}.preview p{font-size:12px;color:var(--muted);margin:5px 0 0}.login{width:min(420px,calc(100% - 32px));margin:12vh auto 0}.login .panel{padding:26px}.foot{font-size:11px;color:var(--muted);margin-top:20px}.hidden{display:none!important}@media(max-width:850px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.layout{grid-template-columns:1fr}.sidebar{min-height:0;border-right:0;border-bottom:1px solid var(--line);padding:8px 12px;overflow:auto}.nav{display:flex;min-width:max-content}.nav button{padding:9px 11px}.workspace{padding-top:22px}.topbar{padding:0 16px}.brand small{display:none}}@media(max-width:540px){.grid{grid-template-columns:1fr}.metrics{gap:8px}.metric{padding:13px}.metric strong{font-size:21px}.workspace{padding-inline:14px}.panel{padding:15px}.top-actions #identity{display:none}}
+  </style>
+</head>
+<body>
+  <section id="login" class="login">
+    <div class="panel">
+      <div class="brand">TAP <small>CONTROL</small></div>
+      <p class="sub" style="margin-top:12px">Administrator sign-in</p>
+      <div id="login-message" class="notice"></div>
+      <div class="field"><label for="api-url">FIREBASE HOSTING URL</label><input id="api-url" type="url" placeholder="https://your-project.web.app" autocomplete="url"></div>
+      <div class="field"><label for="firebase-config">FIREBASE WEB APP CONFIG</label><textarea id="firebase-config" rows="5" placeholder='{"apiKey":"...","authDomain":"your-project.firebaseapp.com","projectId":"your-project","appId":"..."}'></textarea></div>
+      <div class="field"><label for="email">EMAIL</label><input id="email" type="email" autocomplete="username"></div>
+      <div class="field"><label for="password">PASSWORD</label><input id="password" type="password" autocomplete="current-password"></div>
+      <button id="login-button" class="btn primary" style="width:100%">SIGN IN</button>
+      <p class="foot">Administrator accounts must be provisioned by an operator. User accounts cannot access control functions.</p>
+    </div>
+  </section>
+
+  <div id="console" class="shell hidden">
+    <header class="topbar"><div class="brand">TAP <small>CONTROL</small></div><div class="top-actions"><span id="identity"></span><button id="logout" class="btn ghost">Sign out</button></div></header>
+    <div class="layout">
+      <aside class="sidebar"><nav class="nav" aria-label="Admin sections">
+        <button class="active" data-view="overview">Overview</button><button data-view="configuration">Game settings</button><button data-view="tasks">Tasks</button><button data-view="reviews">Task reviews</button>
+      </nav></aside>
+      <main class="workspace">
+        <div id="global-message" class="notice" role="status"></div>
+        <section class="view active" id="view-overview"><h1>Overview</h1><p class="sub">Live account activity from the TAP service.</p>
+          <div class="metrics" id="metrics"></div>
+          <div class="panel"><div class="section-head"><h2>Published configuration</h2><button class="btn ghost" data-go="configuration">Edit settings</button></div><div id="config-summary" class="muted">Loading configuration...</div></div>
+        </section>
+        <section class="view" id="view-configuration"><h1>Game settings</h1><p class="sub">Changes are validated and published as a new remote configuration version.</p>
+          <div class="grid"><div class="panel"><h2>Tap economy</h2>
+            <div class="field"><label for="app-name">APPLICATION NAME</label><input id="app-name" maxlength="48"></div>
+            <div class="field"><label for="coins-per-tap">COINS PER TAP</label><input id="coins-per-tap" type="number" min="1" max="100000"></div>
+            <div class="field"><label for="energy-cost">ENERGY PER TAP</label><input id="energy-cost" type="number" min="1" max="1000"></div>
+            <div class="field"><label for="max-energy">MAXIMUM ENERGY</label><input id="max-energy" type="number" min="1" max="10000000"></div>
+            <div class="field"><label for="regen">ENERGY REGENERATION PER MINUTE</label><input id="regen" type="number" min="0" max="100000"></div>
+            <div class="field"><label for="daily-rewards">DAILY REWARD SCHEDULE · COINS</label><input id="daily-rewards" placeholder="100, 150, 200, 250, 300, 400, 700"></div>
+            <div class="field"><label for="batch-size">MAX TAPS PER REQUEST</label><input id="batch-size" type="number" min="1" max="100"></div>
+            <div class="field"><label for="rate-limit">TAPS PER TEN SECONDS</label><input id="rate-limit" type="number" min="1" max="100"></div>
+            <label class="toggle"><input id="maintenance" type="checkbox"> Maintenance mode</label>
+            <div class="toolbar"><button id="preview" class="btn ghost">Preview</button><button id="publish" class="btn primary">Publish configuration</button></div>
+          </div><div class="panel"><h2>Preview</h2><div class="preview"><div class="coin">T</div><div><strong id="preview-name">TAP</strong><p id="preview-copy">1 coin per tap · 500 energy</p></div></div><p class="foot">Only supported settings are published. The installed app retrieves new versions automatically.</p></div></div>
+        </section>
+        <section class="view" id="view-tasks"><h1>Tasks</h1><p class="sub">Create review-based tasks and control their availability.</p>
+          <div class="panel"><h2>Create a task</h2><div class="grid">
+            <div class="field"><label for="task-title">TITLE</label><input id="task-title" maxlength="100"></div>
+            <div class="field"><label for="task-category">CATEGORY</label><select id="task-category"><option>daily</option><option>social</option><option>promotional</option><option>challenge</option><option>engagement</option><option>referral</option></select></div>
+            <div class="field"><label for="task-reward">REWARD COINS</label><input id="task-reward" type="number" min="0" value="0"></div>
+            <div class="field"><label for="task-verification">VERIFICATION</label><select id="task-verification"><option value="admin_review">Administrator review</option><option value="external">External evidence review</option></select></div>
+          </div><div class="field"><label for="task-description">DESCRIPTION</label><textarea id="task-description" maxlength="1000"></textarea></div><button id="create-task" class="btn primary">Create task</button></div>
+          <div class="panel"><div class="section-head"><h2>All tasks</h2><button id="refresh-tasks" class="btn ghost">Refresh</button></div><div class="table-wrap"><table><thead><tr><th>Task</th><th>Category</th><th>Reward</th><th>Status</th><th></th></tr></thead><tbody id="task-list"></tbody></table></div></div>
+        </section>
+        <section class="view" id="view-reviews"><h1>Task reviews</h1><p class="sub">Approve evidence only after checking the submission.</p>
+          <div class="panel"><div class="section-head"><h2>Pending submissions</h2><button id="refresh-reviews" class="btn ghost">Refresh</button></div><div class="table-wrap"><table><thead><tr><th>User</th><th>Task</th><th>Evidence</th><th>Reward</th><th></th></tr></thead><tbody id="review-list"></tbody></table></div></div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <script type="module">
+    import { deleteApp, getApps, initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+
+    let apiBase = "";
+    let firebaseAuth = null;
+    let firebaseApp = null;
+    let currentConfig = null;
+    const $ = (id) => document.getElementById(id);
+    const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
+    const showMessage = (target, message, error = false) => { const element = $(target); element.textContent = message; element.classList.toggle("error", error); };
+    $('firebase-config').value = sessionStorage.getItem('tap.firebaseConfig') || '';
+    async function api(path, options = {}) {
+      const idToken = firebaseAuth?.currentUser ? await firebaseAuth.currentUser.getIdToken() : null;
+      const headers = { "Content-Type":"application/json", ...(idToken ? {Authorization:`Bearer ${idToken}`} : {}), ...(options.headers || {}) };
+      const response = await fetch(`${apiBase}${path}`, { ...options, headers });
+      const body = response.status === 204 ? {} : await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(body.error || `Request failed (${response.status})`);
+      return body;
+    }
+    function configFromForm() {
+      return { appName:$('app-name').value.trim(), game:{
+        coinsPerTap:Number($('coins-per-tap').value), energyCost:Number($('energy-cost').value),
+        maxEnergy:Number($('max-energy').value), regenPerMinute:Number($('regen').value),
+        maxTapsPerRequest:Number($('batch-size').value), maxTapsPer10Seconds:Number($('rate-limit').value),
+        dailyRewards:$('daily-rewards').value.split(',').map(value => Number(value.trim())),
+        maintenanceMode:$('maintenance').checked
+      }};
+    }
+    function fillConfig(config) {
+      currentConfig = config;
+      $('app-name').value = config.appName;
+      $('coins-per-tap').value = config.game.coinsPerTap;
+      $('energy-cost').value = config.game.energyCost;
+      $('max-energy').value = config.game.maxEnergy;
+      $('regen').value = config.game.regenPerMinute;
+      $('daily-rewards').value = config.game.dailyRewards.join(', ');
+      $('batch-size').value = config.game.maxTapsPerRequest;
+      $('rate-limit').value = config.game.maxTapsPer10Seconds;
+      $('maintenance').checked = config.game.maintenanceMode;
+      previewConfig();
+      $('config-summary').textContent = `Version ${currentConfig.version ?? 0} · ${config.game.coinsPerTap} coin(s) per tap · ${config.game.maxEnergy} maximum energy`;
+    }
+    function previewConfig() {
+      const config = configFromForm();
+      $('preview-name').textContent = config.appName || 'TAP';
+      $('preview-copy').textContent = `${config.game.coinsPerTap || 0} coin(s) per tap · ${config.game.maxEnergy || 0} energy`;
+    }
+    async function loadOverview() {
+      const [overview, config] = await Promise.all([api('/v1/admin/overview'), api('/v1/config')]);
+      $('metrics').innerHTML = [
+        ['Registered users',overview.total_users],['Active · 24h',overview.active_users],
+        ['Verified taps',overview.total_taps],['Coins awarded',overview.coins_awarded]
+      ].map(([label,value]) => `<div class="metric"><span>${escapeHtml(label)}</span><strong>${Number(value || 0).toLocaleString()}</strong></div>`).join('');
+      config.version = config.version;
+      fillConfig(config.config);
+      currentConfig.version = config.version;
+    }
+    async function loadTasks() {
+      const data = await api('/v1/admin/tasks');
+      $('task-list').innerHTML = data.items.map(task => `<tr><td>${escapeHtml(task.title)}</td><td>${escapeHtml(task.category)}</td><td>${Number(task.reward_coins).toLocaleString()}</td><td class="status">${task.active ? 'Active' : 'Paused'}</td><td><button class="btn ghost" data-toggle-task="${escapeHtml(task.id)}" data-active="${task.active}">${task.active ? 'Pause' : 'Activate'}</button></td></tr>`).join('') || '<tr><td colspan="5" class="muted">No tasks configured.</td></tr>';
+      document.querySelectorAll('[data-toggle-task]').forEach(button => button.addEventListener('click', async () => {
+        try { await api(`/v1/admin/tasks/${button.dataset.toggleTask}`, {method:'PUT',body:JSON.stringify({active:button.dataset.active !== '1'})}); await loadTasks(); }
+        catch(error) { showMessage('global-message',error.message,true); }
+      }));
+    }
+    async function loadReviews() {
+      const data = await api('/v1/admin/task-submissions?status=pending');
+      $('review-list').innerHTML = data.items.map(item => {
+        const evidence = typeof item.evidence_json === 'string'
+          ? (() => { try { return JSON.stringify(JSON.parse(item.evidence_json), null, 2); } catch { return item.evidence_json; } })()
+          : JSON.stringify(item.evidence_json, null, 2);
+        return `<tr><td>${escapeHtml(item.username)}</td><td>${escapeHtml(item.task_title)}</td><td><pre>${escapeHtml(evidence)}</pre></td><td>${Number(item.reward_coins).toLocaleString()}</td><td><div class="toolbar"><button class="btn primary" data-review="${escapeHtml(item.id)}" data-status="approved">Approve</button><button class="btn danger" data-review="${escapeHtml(item.id)}" data-status="rejected">Reject</button></div></td></tr>`;
+      }).join('') || '<tr><td colspan="5" class="muted">No pending submissions.</td></tr>';
+      document.querySelectorAll('[data-review]').forEach(button => button.addEventListener('click', async () => {
+        if (!confirm(`${button.dataset.status === 'approved' ? 'Approve' : 'Reject'} this submission?`)) return;
+        try { await api(`/v1/admin/task-submissions/${button.dataset.review}/review`, {method:'POST',body:JSON.stringify({status:button.dataset.status})}); await loadReviews(); }
+        catch(error) { showMessage('global-message',error.message,true); }
+      }));
+    }
+    async function enterConsole() {
+      await api('/v1/admin/overview');
+      $('login').classList.add('hidden'); $('console').classList.remove('hidden');
+      $('identity').textContent = $('email').value;
+      try { await Promise.all([loadOverview(), loadTasks(), loadReviews()]); }
+      catch(error) { $('console').classList.add('hidden'); $('login').classList.remove('hidden'); throw error; }
+    }
+    $('login-button').addEventListener('click', async () => {
+      apiBase = $('api-url').value.trim().replace(/\/$/, '');
+      if (!/^https:\/\//.test(apiBase)) return showMessage('login-message','Use the deployed HTTPS Firebase Hosting URL.',true);
+      $('login-button').disabled = true;
+      try {
+        const firebaseConfig = JSON.parse($('firebase-config').value);
+        if (!firebaseConfig.apiKey || !firebaseConfig.projectId || !firebaseConfig.appId) throw new Error('Enter the Firebase web app configuration.');
+        sessionStorage.setItem('tap.firebaseConfig', JSON.stringify(firebaseConfig));
+        firebaseApp = getApps().find(app => app.name === 'tap-admin') || initializeApp(firebaseConfig, 'tap-admin');
+        firebaseAuth = getAuth(firebaseApp);
+        await signInWithEmailAndPassword(firebaseAuth, $('email').value.trim(), $('password').value);
+        await enterConsole();
+        showMessage('global-message','Connected to TAP.');
+      } catch(error) {
+        if (firebaseAuth?.currentUser) await signOut(firebaseAuth);
+        firebaseAuth = null;
+        if (firebaseApp) await deleteApp(firebaseApp);
+        firebaseApp = null;
+        showMessage('login-message',error.message,true);
+      } finally { $('login-button').disabled = false; }
+    });
+    $('password').addEventListener('keydown', event => { if (event.key === 'Enter') $('login-button').click(); });
+    $('logout').addEventListener('click', async () => {
+      if (firebaseAuth) await signOut(firebaseAuth);
+      firebaseAuth = null; $('console').classList.add('hidden'); $('login').classList.remove('hidden'); $('password').value = '';
+    });
+    document.querySelectorAll('[data-view]').forEach(button => button.addEventListener('click', () => {
+      document.querySelectorAll('[data-view]').forEach(item => item.classList.toggle('active',item === button));
+      document.querySelectorAll('.view').forEach(item => item.classList.toggle('active',item.id === `view-${button.dataset.view}`));
+      showMessage('global-message','');
+    }));
+    document.querySelectorAll('[data-go]').forEach(button => button.addEventListener('click', () => document.querySelector(`[data-view="${button.dataset.go}"]`).click()));
+    $('preview').addEventListener('click',previewConfig);
+    $('publish').addEventListener('click',async () => {
+      const config = configFromForm();
+      if (!config.appName || Object.values(config.game).some(value => typeof value === 'number' && !Number.isFinite(value))) return showMessage('global-message','Complete all configuration fields with valid values.',true);
+      $('publish').disabled = true;
+      try {
+        const result = await api('/v1/admin/config',{method:'PUT',headers:{'Idempotency-Key':crypto.randomUUID().replaceAll('-','')},body:JSON.stringify({config})});
+        currentConfig = result.config; currentConfig.version = result.version;
+        $('config-summary').textContent = `Version ${result.version} · ${config.game.coinsPerTap} coin(s) per tap · ${config.game.maxEnergy} maximum energy`;
+        showMessage('global-message',`Configuration version ${result.version} published.`);
+      } catch(error) { showMessage('global-message',error.message,true); }
+      finally { $('publish').disabled = false; }
+    });
+    $('create-task').addEventListener('click',async () => {
+      const task = {title:$('task-title').value.trim(),description:$('task-description').value.trim(),category:$('task-category').value,rewardCoins:Number($('task-reward').value),verificationType:$('task-verification').value};
+      try {
+        await api('/v1/admin/tasks',{method:'POST',body:JSON.stringify(task)});
+        $('task-title').value=''; $('task-description').value=''; $('task-reward').value='0';
+        await loadTasks(); showMessage('global-message','Task created.');
+      } catch(error) { showMessage('global-message',error.message,true); }
+    });
+    $('refresh-tasks').addEventListener('click',() => loadTasks().catch(error => showMessage('global-message',error.message,true)));
+    $('refresh-reviews').addEventListener('click',() => loadReviews().catch(error => showMessage('global-message',error.message,true)));
+  </script>
+</body>
+</html>

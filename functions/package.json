@@ -1,0 +1,23 @@
+{
+  "name": "tap-firebase-functions",
+  "private": true,
+  "main": "lib/index.js",
+  "engines": { "node": "22" },
+  "scripts": {
+    "build": "tsc",
+    "serve": "npm run build && firebase --config ../firebase.json emulators:start --project demo-tap --only auth,functions,firestore,hosting",
+    "test:emulator": "npm run build && firebase --config ../firebase.json emulators:exec --project demo-tap --only auth,functions,firestore \"node test/smoke.mjs\"",
+    "deploy": "npm run build && firebase --config ../firebase.json deploy --only functions,firestore:rules,firestore:indexes,hosting"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "firebase-admin": "^14.5.0",
+    "firebase-functions": "^7.4.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^22.15.30",
+    "firebase-tools": "^15.35.0",
+    "typescript": "^5.8.3"
+  }
+}

@@ -1,0 +1,48 @@
+workflows:
+  android-release:
+    name: TAP Android release
+    max_build_duration: 60
+    instance_type: linux_x2
+    environment:
+      android_signing:
+        - upload_keystore
+      groups:
+        - tap_release
+      vars:
+        PACKAGE_NAME: com.tap.app
+    scripts:
+      - name: Validate release configuration
+        script: |
+          set -euo pipefail
+          : "${TAP_API_BASE_URL:?Add TAP_API_BASE_URL to the tap_release environment group}"
+          : "${TAP_RELEASE_EMAIL:?Add TAP_RELEASE_EMAIL to the tap_release environment group}"
+          : "${GOOGLE_SERVICES_JSON_BASE64:?Add the base64-encoded google-services.json to tap_release}"
+          case "$TAP_API_BASE_URL" in https://*) ;; *) echo "TAP_API_BASE_URL must use HTTPS"; exit 1 ;; esac
+          : "${CM_KEYSTORE_PATH:?Attach the upload_keystore signing reference in Codemagic}"
+          : "${CM_KEYSTORE_PASSWORD:?Configure the Android keystore password in Codemagic}"
+          : "${CM_KEY_ALIAS:?Configure the Android key alias in Codemagic}"
+          : "${CM_KEY_PASSWORD:?Configure the Android key password in Codemagic}"
+      - name: Configure Firebase Android app
+        script: |
+          set -euo pipefail
+          printf '%s' "$GOOGLE_SERVICES_JSON_BASE64" | base64 --decode > app/google-services.json
+          node -e 'JSON.parse(require("fs").readFileSync("app/google-services.json", "utf8"))'
+      - name: Build signed APK and Play bundle
+        script: |
+          set -euo pipefail
+          VERSION_CODE="${CM_BUILD_NUMBER:-1}"
+          VERSION_NAME="${TAP_VERSION_NAME:-1.0.0}"
+          gradle --no-daemon :app:assembleRelease :app:bundleRelease \
+            -PTAP_API_BASE_URL="$TAP_API_BASE_URL" \
+            -PVERSION_CODE="$VERSION_CODE" \
+            -PVERSION_NAME="$VERSION_NAME"
+    artifacts:
+      - app/build/outputs/apk/release/*.apk
+      - app/build/outputs/bundle/release/*.aab
+    publishing:
+      email:
+        recipients:
+          - $TAP_RELEASE_EMAIL
+        notify:
+          success: true
+          failure: true
